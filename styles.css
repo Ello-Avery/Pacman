@@ -1,0 +1,98 @@
+* {
+  box-sizing: border-box; /* prevents padding from adding to element width/height */
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: black;
+}
+
+.wrapper {
+  height: 100%;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  border: thin yellow solid;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+}
+
+h1 {
+  color: yellow;
+}
+
+.scoreboard {
+  color: white;
+}
+
+.game {
+  display: block;
+  /* outline: thin dotted red; */
+  width: 400px;
+  height: 400px;
+}
+
+.board {
+  display: inline-block;
+  background-color: rgb(20, 20, 20);
+  vertical-align: top;
+  width: 20px;
+  height: 20px;
+}
+
+.wall {
+  display: inline-block;
+  background-color: blue;
+  vertical-align: top;
+  width: 20px;
+  height: 20px;
+}
+
+.player {
+  display: inline-block;
+  background-color: yellow;
+  vertical-align: top;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.bigPellet {
+  display: block;
+  background-color: white;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  margin: 5px auto;
+}
+
+.smallPellet {
+  display: block;
+  background-color: white;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin: 5px auto;
+}
+
+.ghost_1 {
+  display: block;
+  background-color: pink;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  margin: 5px auto;
+}
