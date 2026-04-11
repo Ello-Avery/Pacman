@@ -53,3 +53,5 @@ async function moveGhost(newX, newY, direction) {
     moveGhost(ghost_1X + 1, ghost_1Y, "right");
   }
 }
+
+// Josh was here
