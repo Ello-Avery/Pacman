@@ -1,5 +1,5 @@
 /* Player Starting Position */
-
+//Jamil is the man
 var currentDirection = "";
 
 var playerX = 1;
