@@ -1,4 +1,5 @@
 async function moveGhost(newX, newY, direction) {
+  if (gameOver) return; // FIX: stop the ghost loop when the game ends
   if (newX < 0 || newX >= game[0].length) return;
   if (newY < 0 || newY >= game.length) return;
 
@@ -24,8 +25,11 @@ async function moveGhost(newX, newY, direction) {
     //return
   }
 
+  // FIX: ghost catching the player now sets gameOver and returns (was just text)
   if (game[newY][newX] === 3) {
-    scoreLabel.innerText = "GAME OVER!";
+    gameOver = true;
+    scoreLabel.innerText = "GAME OVER! Score: " + score;
+    return;
   }
 
   game[ghost_1Y][ghost_1X] = ghostMove[7];

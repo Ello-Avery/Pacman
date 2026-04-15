@@ -1,4 +1,5 @@
 async function movePlayer(newX, newY, direction) {
+  if (gameOver) return; // FIX: halt movement once the game ends
   if (
     newX < 0 ||
     newX >= game[0].length ||
@@ -8,17 +9,15 @@ async function movePlayer(newX, newY, direction) {
   )
     return;
 
-  updateScore(newY, newY);
-
+  // FIX: check ghost collision BEFORE scoring so the dying move doesn't also score
   if (game[newY][newX] === 7) {
-    scoreLabel.innerText = "GAME OVER!";
-    game[playerY][playerX] = 0;
-    playerX = newX;
-    playerY = newY;
-    game[playerY][playerX] = 7;
+    gameOver = true;
+    scoreLabel.innerText = "GAME OVER! Score: " + score;
     drawGame(game);
     return;
   }
+
+  updateScore(newX, newY); // FIX: was updateScore(newY, newY) — wrong args
 
   game[playerY][playerX] = 0;
   playerX = newX;
@@ -33,6 +32,7 @@ async function movePlayer(newX, newY, direction) {
 }
 
 async function nextMovePlayer() {
+  if (gameOver) return; // FIX: stop the auto-move loop on game end
   if (currentDirection === "up") {
     await wait(30);
     movePlayer(playerX, playerY - 1, "up");
@@ -56,6 +56,7 @@ async function nextMovePlayer() {
 }
 
 document.addEventListener("keydown", (e) => {
+  if (gameOver) return; // FIX: ignore arrow keys after game ends
   if (e.key === "ArrowUp") {
     currentDirection = "up";
     movePlayer(playerX, playerY - 1, "up");
