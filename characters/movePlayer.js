@@ -1,4 +1,11 @@
-async function movePlayer(newX, newY, direction) {
+const directionKeyMap = {
+  ArrowUp: () => movePlayer(playerX, playerY - 1),
+  ArrowDown: () => movePlayer(playerX, playerY + 1),
+  ArrowLeft: () => movePlayer(playerX - 1, playerY),
+  ArrowRight: () => movePlayer(playerX + 1, playerY),
+};
+
+async function movePlayer(newX, newY) {
   if (
     newX < 0 ||
     newX >= game[0].length ||
@@ -8,7 +15,7 @@ async function movePlayer(newX, newY, direction) {
   )
     return;
 
-  updateScore(newY, newY);
+  updateScore(newX, newY);
 
   if (game[newY][newX] === 7) {
     scoreLabel.innerText = "GAME OVER!";
@@ -25,51 +32,16 @@ async function movePlayer(newX, newY, direction) {
   playerY = newY;
   game[playerY][playerX] = 3;
 
+  await wait(50);
+
   drawGame(game);
 
-  nextMovePlayer();
-
-  return;
-}
-
-async function nextMovePlayer() {
-  if (currentDirection === "up") {
-    await wait(30);
-    movePlayer(playerX, playerY - 1, "up");
-    return;
-  }
-  if (currentDirection === "down") {
-    await wait(30);
-    movePlayer(playerX, playerY + 1, "down");
-    return;
-  }
-  if (currentDirection === "left") {
-    await wait(30);
-    movePlayer(playerX - 1, playerY, "left");
-    return;
-  }
-  if (currentDirection === "right") {
-    await wait(30);
-    movePlayer(playerX + 1, playerY, "right");
-    return;
-  }
+  const action = directionKeyMap[currentDirection];
+  if (action) action();
 }
 
 document.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowUp") {
-    currentDirection = "up";
-    movePlayer(playerX, playerY - 1, "up");
-  }
-  if (e.key === "ArrowDown") {
-    currentDirection = "down";
-    movePlayer(playerX, playerY + 1, "down");
-  }
-  if (e.key === "ArrowLeft") {
-    currentDirection = "left";
-    movePlayer(playerX - 1, playerY, "left");
-  }
-  if (e.key === "ArrowRight") {
-    currentDirection = "right";
-    movePlayer(playerX + 1, playerY, "right");
-  }
+  currentDirection = e.key;
+  const action = directionKeyMap[currentDirection];
+  if (action) action();
 });
